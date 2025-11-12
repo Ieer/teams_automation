@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=67", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "teams-automation"
+version = "0.1.0"
+description = "UIAutomation helpers for scripting Microsoft Teams on Windows"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "Ieer", email = "qinquan0808@outlook.com" }
+]
+license = { file = "LICENSE" }
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+]
+keywords = ["uiautomation", "microsoft-teams", "windows"]
+dependencies = [
+  "uiautomation>=2.0",
+  "Pillow>=9.0",
+  "pywin32>=304",
+]
+
+[project.urls]
+Homepage = "https://github.com/Ieer/teams-automation"
+Issues = "https://github.com/Ieer/teams-automation/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

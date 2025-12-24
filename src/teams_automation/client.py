@@ -58,8 +58,8 @@ class TeamsClient:
     _DEFAULT_WINDOW_KEYWORD = "Microsoft Teams"
     _DEFAULT_WINDOW_CLASS = "TeamsWebView"
     _DEFAULT_SECTION_NAMES = ("Favorites", "Chats")
-    _MESSAGE_FIELD_NAMES = ("Type a message", "Type your message")
-    _SEND_BUTTON_NAMES = ("Send (Ctrl+Enter)", "Send")
+    _MESSAGE_FIELD_NAMES = ("Type a message", "Type your message","键入消息")
+    _SEND_BUTTON_NAMES = ("Send (Ctrl+Enter)", "Send","发送 (Ctrl+Enter)")
     _IMAGE_EXTENSIONS = {
         ".png",
         ".jpg",
@@ -209,20 +209,21 @@ class TeamsClient:
             auto.SendKeys("{win}d")
 
     def _open_chat_hub(self, window: auto.Control) -> None:
-        chat_button = window.Control(searchDepth=30, Name="Chat (Ctrl+2)")
+        
+        chat_button = window.Control(searchDepth=30, Name="Chat (Ctrl+2)|聊天 (Ctrl+2)")
         if not chat_button.Exists(0, 0):
             raise TeamsAutomationError("Chat hub button not found.")
         chat_button.Click()
         window.SetActive()  # type: ignore[attr-defined]
 
     def _apply_filter(self, window: auto.Control) -> None:
-        filter_button = window.ButtonControl(searchDepth=30, Name="Show filter text box (Ctrl+Shift+F)")
+        filter_button = window.ButtonControl(searchDepth=30, Name="Show filter text box (Ctrl+Shift+F)|显示筛选器文本框 (Ctrl+Shift+F)")
         if not filter_button.Exists(0, 0):
             raise TeamsAutomationError("Filter text box trigger not found.")
         filter_button.Click()
 
     def _filter_search(self, window: auto.Control, term: str) -> None:
-        search_field = window.EditControl(searchDepth=30, Name="Filter by name or group name")
+        search_field = window.EditControl(searchDepth=30, Name="Filter by name or group name|按姓名或组名筛选")
         if not search_field.Exists(0, 0):
             raise TeamsAutomationError("Filter search field not found.")
         search_field.SetFocus()
@@ -267,7 +268,7 @@ class TeamsClient:
         )
 
     def _collect_sections(self, window: auto.Control) -> Dict[str, Tuple[auto.Control, ...]]:
-        container = window.Control(searchDepth=30, Name="Filter active")
+        container = window.Control(searchDepth=30, Name="Filter active|筛选器处于活动状态")
         if not container.Exists(0, 0):
             raise TeamsAutomationError("Active filter list not found.")
         sections: Dict[str, Tuple[auto.Control, ...]] = {}
@@ -285,7 +286,7 @@ class TeamsClient:
         return sections
 
     def _close_filter(self, window: auto.Control) -> None:
-        close_button = window.ButtonControl(searchDepth=30, Name="Close filter text box")
+        close_button = window.ButtonControl(searchDepth=30, Name="Close filter text box|关闭筛选器文本框")
         if close_button.Exists(0, 0):
             close_button.Click()
             time.sleep(0.5)
